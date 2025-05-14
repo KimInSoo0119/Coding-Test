@@ -2,38 +2,30 @@ import java.util.*;
 import java.lang.*;
 class Solution {
   public String solution(String X, String Y) {
-      HashMap<Integer, Integer> map1 = new HashMap<>();
-      HashMap<Integer, Integer> map2 = new HashMap<>();
+      List<String> arr1 = new ArrayList<>(Arrays.asList(X.split("")));
+      List<String> arr2 = new ArrayList<>(Arrays.asList(Y.split("")));
+      List<String> arr3 = new ArrayList<>();
+      Collections.sort(arr1);
+      Collections.sort(arr2);
       StringBuilder sb = new StringBuilder();
       
-      String[] X1 = X.split("");
-      String[] Y1 = Y.split("");
-          
-      for (String s : X1) {
-          map1.put(Integer.parseInt(s), map1.getOrDefault(Integer.parseInt(s), 0) + 1);
+      for (int i = 0; i < arr1.size(); i++) {
+        if (arr2.contains(arr1.get(i))) {
+          //arr3.add(arr1.get(i));
+          sb.append(arr1.get(i));
+          int idx = arr2.indexOf(arr1.get(i));
+          arr2.remove(idx);
+        }
       }
       
-      for (String s : Y1) {
-          map2.put(Integer.parseInt(s), map2.getOrDefault(Integer.parseInt(s), 0) + 1);
-      }
-       
-      for (int i = 9; i >= 0; i--) {
-          if (map1.containsKey(i) == true && map2.containsKey(i) == true) {
-              int cnt = Math.min(map1.get(i), map2.get(i));
-              for (int j = 0; j < cnt; j++) {
-                  sb.append(i);
-              }
-          }
-      }
+      int check = Integer.parseInt(sb.toString());
       
-      if (sb.toString().length() == 0) {
-          return "-1";
+      if (check == 0) {
+        return "0";
+      } else if (check == 1) {
+        return "1";
+      } else {
+        return sb.toString();
       }
-      
-      if (sb.toString().replace("0", "").length() == 0) {
-          return "0";
-      }
-      
-      return sb.toString();
   }
 }
